@@ -1,31 +1,33 @@
 import 'package:flutter/material.dart';
 
+import './categories_screen.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  //...
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter App',
-      home: MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  //...
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Flutter App'),
+      theme: ThemeData(
+        primarySwatch: Colors.purple,
+        accentColor: Colors.amber,
+        canvasColor: Color.fromRGBO(255, 254, 229, 1),
+        fontFamily: 'RaleWay',
+        textTheme: ThemeData.light().textTheme.copyWith(
+              body1: TextStyle(
+                color: Color.fromRGBO(20, 51, 51, 1),
+              ),
+              body2: TextStyle(
+                color: Color.fromRGBO(20, 51, 51, 1),
+              ),
+              title: TextStyle(
+                fontSize: 23,
+                fontFamily: 'RoboCondensed',
+              ),
+            ),
       ),
-      body: Center(
-        child: Text('Widget Playground'),
-      ),
+      home: CategoriesScreen(),
     );
   }
 }
