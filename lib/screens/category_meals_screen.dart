@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
-import '../widgets/meal_item.dart';
-import '../dummy_data.dart';
-import '../models/meal.dart';
 
-class CategoryMealsScreen extends StatefulWidget {
-  static const routName = '/category-meals';
+import '../models/meal.dart';
+import '../widgets/meal_item.dart';
+
+class CategoryMealsSCreen extends StatefulWidget {
+  // CategoryMealsSCreen(this.categoryId, this.categoryTitle);
+  static const routeName = '/category-meals';
+
+  final List<Meal> availableMeals;
+
+  CategoryMealsSCreen(this.availableMeals);
 
   @override
-  _CategoryMealsScreenState createState() => _CategoryMealsScreenState();
+  _CategoryMealsSCreenState createState() => _CategoryMealsSCreenState();
 }
 
-class _CategoryMealsScreenState extends State<CategoryMealsScreen> {
+class _CategoryMealsSCreenState extends State<CategoryMealsSCreen> {
   String? categoryTitle;
-  late List<Meal> displaydMeals;
-  var _loadedInitData = false;
+  late List<Meal> displayedMeals;
+  var _loadInitData = false;
 
   @override
   void initState() {
@@ -23,22 +28,25 @@ class _CategoryMealsScreenState extends State<CategoryMealsScreen> {
 
   @override
   void didChangeDependencies() {
-    if (!_loadedInitData) {
+    if (!_loadInitData) {
       final routeArgs =
           ModalRoute.of(context)!.settings.arguments as Map<String, String>;
-      categoryTitle = routeArgs['title'];
+      print(routeArgs);
       final categoryId = routeArgs['id'];
-      displaydMeals = DUMMY_MEALS.where((meal) {
+      categoryTitle = routeArgs['title'];
+
+      displayedMeals = widget.availableMeals.where((meal) {
         return meal.categories.contains(categoryId);
       }).toList();
-      _loadedInitData = true;
+      _loadInitData = true;
     }
+    //print(displayedMeals);
     super.didChangeDependencies();
   }
 
   void _removeMeal(String mealId) {
     setState(() {
-      displaydMeals.removeWhere((meal) => meal.id == mealId);
+      displayedMeals.removeWhere((meal) => meal.id == mealId);
     });
   }
 
@@ -46,21 +54,20 @@ class _CategoryMealsScreenState extends State<CategoryMealsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(categoryTitle.toString()),
+        title: Text(categoryTitle!),
       ),
       body: ListView.builder(
         itemBuilder: (ctx, index) {
           return MealItem(
-            id: displaydMeals[index].id,
-            title: displaydMeals[index].title,
-            imageUrl: displaydMeals[index].imageUrl,
-            duration: displaydMeals[index].duration,
-            affordability: displaydMeals[index].affordability,
-            complexity: displaydMeals[index].complexity,
-            removeItem: _removeMeal,
+            id: displayedMeals[index].id,
+            title: displayedMeals[index].title,
+            imageUrl: displayedMeals[index].imageUrl,
+            duration: displayedMeals[index].duration,
+            complexity: displayedMeals[index].complexity,
+            affordability: displayedMeals[index].affordability,
           );
         },
-        itemCount: displaydMeals.length,
+        itemCount: displayedMeals.length,
       ),
     );
   }

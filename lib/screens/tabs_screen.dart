@@ -1,25 +1,34 @@
 import 'package:flutter/material.dart';
-import '../widgets/main_drawer.dart';
-import '../screens/favorites_screen.dart';
+
+import '../models/meal.dart';
 import '../screens/categories_screen.dart';
+import '../screens/favorite_screen.dart';
+import '../widgets/main_drawer.dart';
 
 class TabsScreen extends StatefulWidget {
   @override
-  _TabsScreenState createState() => _TabsScreenState();
+  _TabScreenState createState() => _TabScreenState();
+
+  final List<Meal> _favoriteMeals;
+
+  TabsScreen(this._favoriteMeals);
 }
 
-class _TabsScreenState extends State<TabsScreen> {
-  final List<Map<String, Object>> _pages = [
-    {
-      'page': CategoriesScreen(),
-      'title': 'Categories',
-    },
-    {
-      'page': FavoritesScreen(),
-      'title': 'Your  Favorites',
-    },
-  ];
+class _TabScreenState extends State<TabsScreen> {
+  late List<Map<String, Object>> _pages;
   int _selectedPageIndex = 0;
+
+  @override
+  void initState() {
+    _pages = [
+      {'page': CategoriesScreen(), 'title': 'Categories'},
+      {
+        'page': FavoriteScreen(widget._favoriteMeals),
+        'title': 'Your favorites'
+      },
+    ];
+    super.initState();
+  }
 
   void _selectPage(int index) {
     setState(() {
@@ -41,18 +50,20 @@ class _TabsScreenState extends State<TabsScreen> {
         unselectedItemColor: Colors.white,
         selectedItemColor: Theme.of(context).accentColor,
         currentIndex: _selectedPageIndex,
-        type: BottomNavigationBarType.shifting,
+        //type: BottomNavigationBarType.shifting,
         items: [
           BottomNavigationBarItem(
-            backgroundColor: Theme.of(context).primaryColor,
-            icon: Icon(Icons.category),
-            title: Text('Categories'),
-          ),
+              icon: Icon(
+                Icons.category,
+              ),
+              // ignore: deprecated_member_use
+              title: Text('Categories')),
           BottomNavigationBarItem(
-            backgroundColor: Theme.of(context).primaryColor,
-            icon: Icon(Icons.star),
-            title: Text('Favorites'),
-          ),
+              icon: Icon(
+                Icons.category,
+              ),
+              // ignore: deprecated_member_use
+              title: Text('Categories')),
         ],
       ),
     );

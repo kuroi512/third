@@ -6,16 +6,20 @@ class CategoryItem extends StatelessWidget {
   final String title;
   final Color color;
 
-  CategoryItem(this.id, this.title, this.color);
+  const CategoryItem(this.id, this.title, this.color);
 
   void selectCategory(BuildContext ctx) {
     Navigator.of(ctx).pushNamed(
-      CategoryMealsScreen.routName,
+      CategoryMealsSCreen.routeName,
       arguments: {
         'id': id,
         'title': title,
       },
     );
+    // print('--------------');
+    // print(id);
+    // print(title);
+    // print('-------------');
   }
 
   @override
@@ -25,9 +29,11 @@ class CategoryItem extends StatelessWidget {
       splashColor: Theme.of(context).primaryColor,
       borderRadius: BorderRadius.circular(15),
       child: Container(
-        padding: const EdgeInsets.all(15),
+        padding: EdgeInsets.all(15),
+        // ignore: deprecated_member_use
         child: Text(
           title,
+          // ignore: deprecated_member_use
           style: Theme.of(context).textTheme.title,
         ),
         decoration: BoxDecoration(

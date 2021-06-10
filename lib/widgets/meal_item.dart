@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/meal.dart';
 import '../screens/meal_detail_screen.dart';
+import '../models/meal.dart';
 
 class MealItem extends StatelessWidget {
   final String id;
@@ -9,31 +9,34 @@ class MealItem extends StatelessWidget {
   final int duration;
   final Complexity complexity;
   final Affordability affordability;
-  final Function removeItem;
 
   MealItem({
     required this.id,
     required this.title,
     required this.imageUrl,
-    required this.affordability,
-    required this.complexity,
     required this.duration,
-    required this.removeItem,
+    required this.complexity,
+    required this.affordability,
   });
 
   String get complexityText {
     switch (complexity) {
       case Complexity.Simple:
-        return 'Simple';
+        return 'simple';
+        // ignore: dead_code
         break;
       case Complexity.Challenging:
-        return 'Challenging';
+        return 'challenging';
+        // ignore: dead_code
         break;
       case Complexity.Hard:
-        return 'Hard';
+        return 'hard';
+        // ignore: dead_code
         break;
-      default:
-        return 'Unknown';
+      case Complexity.Unknown:
+        return 'unknown';
+        // ignore: dead_code
+        break;
     }
   }
 
@@ -41,15 +44,16 @@ class MealItem extends StatelessWidget {
     switch (affordability) {
       case Affordability.Affordable:
         return 'Affordable';
+        // ignore: dead_code
+        break;
+      case Affordability.Luxurious:
+        return 'Luxurious';
+        // ignore: dead_code
         break;
       case Affordability.Pricey:
         return 'Pricey';
+        // ignore: dead_code
         break;
-      case Affordability.Luxurious:
-        return 'Expensive';
-        break;
-      default:
-        return 'Unknown';
     }
   }
 
@@ -61,7 +65,7 @@ class MealItem extends StatelessWidget {
     )
         .then((result) {
       if (result != null) {
-        removeItem(result);
+        //removeItem(result);
       }
     });
   }
@@ -71,19 +75,17 @@ class MealItem extends StatelessWidget {
     return InkWell(
       onTap: () => selectMeal(context),
       child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         elevation: 4,
         margin: EdgeInsets.all(10),
         child: Column(
-          children: <Widget>[
+          children: [
             Stack(
-              children: <Widget>[
+              children: [
                 ClipRRect(
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10),
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15),
                   ),
                   child: Image.network(
                     imageUrl,
@@ -116,9 +118,9 @@ class MealItem extends StatelessWidget {
               padding: EdgeInsets.all(20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
+                children: [
                   Row(
-                    children: <Widget>[
+                    children: [
                       Icon(
                         Icons.schedule,
                       ),
@@ -129,7 +131,7 @@ class MealItem extends StatelessWidget {
                     ],
                   ),
                   Row(
-                    children: <Widget>[
+                    children: [
                       Icon(
                         Icons.work,
                       ),
@@ -140,7 +142,7 @@ class MealItem extends StatelessWidget {
                     ],
                   ),
                   Row(
-                    children: <Widget>[
+                    children: [
                       Icon(
                         Icons.attach_money,
                       ),
